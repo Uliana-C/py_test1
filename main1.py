@@ -1,8 +1,8 @@
 class Polynomial:
     # Инициализация многочлена: [1, 2, 3] соответствует 3x^2 + 2x + 1.
-    def init(self, cof):
+    def __init__(self, coeff):
         # Делаем список
-        self.cof = list(cof)
+        self.coeff = list(coeff)
         # Убираем ненужные нули в конце и список делаем
         self._remove_leading_zeros()
 
@@ -70,7 +70,57 @@ class Polynomial:
         for power, coeff in enumerate(self.coeff):
             if power > 0:
                 derivative_coeffs.append(coeff * power)
-
         return Polynomial(derivative_coeffs)
+
+def create_polynomial():
+
+        while True:
+            try:
+                coeffs_str = input("Введите коэффициенты многочлена через пробел (от младшего к старшему): ")
+                coeffs = list(map(float, coeffs_str.split()))
+                return Polynomial(coeffs)
+            except ValueError:
+                print("Ошибка: Введите числа, разделенные пробелами.")
+
+def get_point():
+
+        while True:
+            try:
+                x_str = input("Введите значение точки, в которой нужно вычислить многочлен: ")
+                x = float(x_str)
+                return x
+            except ValueError:
+                print("Ошибка: Введите число.")
+
+
+if __name__ == "__main__":
+        # Ввод многочленов с клавиатуры
+        print("Ввод первого многочлена:")
+        poly1 = create_polynomial()
+        print("Ввод второго многочлена:")
+        poly2 = create_polynomial()
+        # Вывод
+        print(f"Многочлен 1: {poly1}")
+        print(f"Многочлен 2: {poly2}")
+        print()
+
+        # Складываем
+        poly_sum = poly1 + poly2
+        print(f"Сумма многочленов: {poly_sum}")
+        print()
+
+        # Точка
+        x_val = get_point()
+
+        # Вычисляем значение в точке
+        print(f"Значение многочлена 1 в точке x = {x_val}: {poly1.evaluate(x_val)}")
+        print(f"Значение многочлена 2 в точке x = {x_val}: {poly2.evaluate(x_val)}")
+
+        # Вычисляем и выводим производную
+        deriv_poly1 = poly1.derivative()
+        deriv_poly2 = poly2.derivative()
+        print(f"Производная многочлена 1: {deriv_poly1}")
+        print(f"Производная многочлена 2: {deriv_poly2}")
+        print()
 
 
